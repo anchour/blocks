@@ -2,8 +2,6 @@
 
 namespace Anchour\Blocks\Blocks;
 
-use Carbon_Fields\Block;
-
 class BaseBlock
 {
     /**
@@ -49,7 +47,7 @@ class BaseBlock
         return static::$instance;
     }
 
-    protected function setup(): BaseBlock
+    public function setup()
     {
         $this->block = Block::make(__($this->name, 'anchour/blocks'));
 
