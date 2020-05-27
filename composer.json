@@ -1,0 +1,26 @@
+{
+  "name": "anchour/bocks",
+  "description": "WordPress Gutenberg Blocks based off of Carbon Fields",
+  "type": "library",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "htmlburger/carbon-fields": "^3.1",
+    "tightenco/collect": "^7.12"
+  },
+  "autoload": {
+    "psr-4": {
+      "Anchour\\Blocks\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Matt Robitaille",
+      "email": "matt@anchour.com"
+    }
+  ],
+  "require-dev": {
+    "phpunit/phpunit": "^9.0",
+    "pestphp/pest": "^0.1.5"
+  }
+}
