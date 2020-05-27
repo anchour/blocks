@@ -1,5 +1,5 @@
 {
-  "name": "anchour/bocks",
+  "name": "anchour/blocks",
   "description": "WordPress Gutenberg Blocks based off of Carbon Fields",
   "type": "library",
   "minimum-stability": "dev",
