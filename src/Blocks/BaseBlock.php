@@ -2,6 +2,8 @@
 
 namespace Anchour\Blocks\Blocks;
 
+use Carbon_Fields\Block;
+
 class BaseBlock
 {
     /**
