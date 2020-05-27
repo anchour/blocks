@@ -6,8 +6,16 @@ use Carbon_Fields\Block;
 
 class BaseBlock
 {
+    /**
+     * Singleton instance.
+     *
+     * @var BaseBlock
+     */
     protected static $instance;
 
+    /**
+     * @var Carbon_Fields\Container\Container
+     */
     protected $block;
 
     /**
@@ -20,6 +28,9 @@ class BaseBlock
      */
     protected $name = '';
 
+    /**
+     * BaseBlock constructor. Protected so it's a singleton.
+     */
     protected function __construct()
     {
     }
@@ -38,11 +49,43 @@ class BaseBlock
         return static::$instance;
     }
 
-    protected function setupFields()
+    protected function setup(): BaseBlock
     {
         $this->block = Block::make(__($this->name, 'anchour/blocks'));
 
-        $this->block->add_fields($this->fields);
+        $this->block
+            ->add_fields($this->makeFields())
+            ->set_description("Field description here")
+            ->set_render_callback([$this, 'render']);
+
+        return $this;
     }
 
+    protected function render()
+    {
+        echo $this->name;
+    }
+
+    /**
+     * @return array
+     */
+    protected function makeFields()
+    {
+        return collect($this->fields)
+            ->map(function ($field) {
+                return Field::make(
+                    $field['type'],
+                    $field['name'],
+                    $field['label']
+                );
+            })->toArray();
+    }
+
+    /**
+     * @param array $fields
+     */
+    public function setFields(array $fields = [])
+    {
+        $this->fields = $fields;
+    }
 }

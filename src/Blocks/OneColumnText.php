@@ -8,10 +8,12 @@ class OneColumnText extends BaseBlock
 {
     protected $name = 'One Column Text';
 
-    protected $fields = [];
+    protected $fields = [
+        [
+            'type' => 'text',
+            'name' => 'title',
+            'label' => 'Title',
+        ]
+    ];
 
-    public function addField(Field $field)
-    {
-        $this->fields[] = $field;
-    }
 }
