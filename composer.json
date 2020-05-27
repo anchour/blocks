@@ -2,6 +2,7 @@
   "name": "anchour/blocks",
   "description": "WordPress Gutenberg Blocks based off of Carbon Fields",
   "type": "library",
+  "license": "MIT",
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
