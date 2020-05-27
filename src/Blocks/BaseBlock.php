@@ -61,7 +61,7 @@ class BaseBlock
         return $this;
     }
 
-    protected function render()
+    public function render()
     {
         echo $this->name;
     }
