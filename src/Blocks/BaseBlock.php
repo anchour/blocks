@@ -1,6 +1,6 @@
 <?php
 
-namespace Anchour\Blocks;
+namespace Anchour\Blocks\Blocks;
 
 use Carbon_Fields\Block;
 

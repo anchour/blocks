@@ -1,8 +1,6 @@
 <?php
 
-namespace Anchour\Blocks;
-
-use Carbon_Fields\Field\Field;
+namespace Anchour\Blocks\Blocks;
 
 class OneColumnText extends BaseBlock
 {
