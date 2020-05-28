@@ -3,6 +3,7 @@
 namespace Anchour\Blocks\Blocks;
 
 use Carbon_Fields\Block;
+use Carbon_Fields\Field;
 
 class BaseBlock
 {
@@ -43,7 +44,7 @@ class BaseBlock
     public static function register()
     {
         if (is_null(static::$instance)) {
-            static::$instance = new BaseBlock();
+            static::$instance = new static;
         }
 
         return static::$instance;
