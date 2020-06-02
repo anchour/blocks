@@ -14,8 +14,21 @@ class CtaSection extends BaseBlock
 
     protected $description = 'Houses nested CTA blocks.';
 
-    protected $allowedNestedBlocks = [
-        'carbon-fields/cta-block',
+    // protected $allowedNestedBlocks = [
+    //     'carbon-fields/cta-block',
+    // ];
+
+    protected $fields = [
+        [
+            'type' => 'text',
+            'name' => 'title',
+            'label' => 'Heading'
+        ],
+        [
+            'type' => 'rich_text',
+            'name' => 'content',
+            'label' => 'Content'
+        ]
     ];
 
     public function render($fields, $attributes, $inner_blocks)
