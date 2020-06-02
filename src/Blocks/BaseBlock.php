@@ -5,7 +5,9 @@ namespace Anchour\Blocks\Blocks;
 use Carbon_Fields\Block;
 use Carbon_Fields\Field;
 
-class BaseBlock
+use function Anchour\Blocks\view;
+
+abstract class BaseBlock
 {
     /**
      * Singleton instance.
@@ -30,24 +32,13 @@ class BaseBlock
     protected $name = '';
 
     /**
-     * BaseBlock constructor. Protected so it's a singleton.
-     */
-    protected function __construct()
-    {
-    }
-
-    /**
      * Singleton instance, so we can't register the same block more than once.
      *
      * @return BaseBlock
      */
     public static function register()
     {
-        if (is_null(static::$instance)) {
-            static::$instance = new static;
-        }
-
-        return static::$instance;
+        return new static;
     }
 
     public function setup()
@@ -55,31 +46,55 @@ class BaseBlock
         $this->block = Block::make(__($this->name, 'anchour/blocks'));
 
         $this->block
-            ->add_fields($this->makeFields())
-            ->set_description("Field description here")
+            ->add_fields($this->makeFields($this->fields))
+            ->set_description($this->description)
             ->set_render_callback([$this, 'render']);
+
+        if (isset($this->isNestable) && $this->isNestable) {
+            $this->block->set_inner_blocks(true)->set_inner_blocks_template([
+                ['carbon-fields/cta-block']
+            ]);
+        }
 
         return $this;
     }
 
-    public function render()
-    {
-        echo $this->name;
-    }
+
+    abstract public function render($fields, $attributes, $inner_blocks);
 
     /**
      * @return array
      */
-    protected function makeFields()
+    protected function makeFields($fields)
     {
-        return collect($this->fields)
+        return collect($fields)
             ->map(function ($field) {
-                return Field::make(
+                if ($field['type'] == 'complex') {
+                    return Field::make('complex', $field['name'])->add_fields($this->makeFields($field['children']));
+                }
+
+                $fieldObj = Field::make(
                     $field['type'],
                     $field['name'],
                     $field['label']
                 );
+
+                // if (isset($field['set_value_type'])) {
+                //     dd(method_exists($fieldObj, 'set_value_type'));
+                //     $fieldObj->set_value_type($field['set_value_type']);
+                // }
+
+                return $fieldObj;
             })->toArray();
+    }
+
+    protected function blockName()
+    {
+        $name = preg_replace('/[^A-Za-z0-9\-\_\s]/', '', $this->name);
+        $name = strtolower($name);
+        $name = str_replace(['-', ' '], '_', $name);
+
+        return $name;
     }
 
     /**

@@ -10,6 +10,9 @@
     "tightenco/collect": "^7.12"
   },
   "autoload": {
+    "files": [
+      "resources/helpers.php"
+    ],
     "psr-4": {
       "Anchour\\Blocks\\": "src/"
     }
